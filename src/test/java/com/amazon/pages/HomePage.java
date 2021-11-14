@@ -2,8 +2,10 @@ package com.amazon.pages;
 
 import com.amazon.utilities.BrowserTools;
 import com.amazon.utilities.Driver;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -29,25 +31,31 @@ public class HomePage {
     public WebElement nextPage;
 
 
-    public void searchItem(String Product){
+    public void searchItem(String product){
 
+        boolean flag = false;
 
+            while ( ! flag){
 
+                try {
 
-            if ( ! Driver.get().findElement(By.xpath("//contain(text(), '"+Product+"')]")).isDisplayed()){
+                    WebElement element = Driver.get().findElement(By.xpath("//*[contains(text(), '" + product + "')]"));
 
-                String next =" //*[contains(text(), 'Next')]";
+                    BrowserTools.scrollToElementAndClick(element);
 
-                BrowserTools.scrollToElement(Driver.get().findElement(By.xpath(next)));
+                    BrowserTools.waitFor(2);
 
-                BrowserTools.waitFor(2);
+                    flag = true;
 
-                nextPage.click();
-            }else {
-                //Driver.get().findElement(By.xpath("//contain(text(), '"+Product+"')]")).click();
+                }catch (NoSuchElementException e){
+
+                    BrowserTools.scrollToElementAndClick(nextPage);
+                    BrowserTools.waitFor(2);
+                }
+
             }
 
-
     }
+
 
 }
