@@ -2,6 +2,7 @@ package com.amazon.stepDefinition;
 
 import com.amazon.pages.HomePage;
 import com.amazon.pages.ProductPage;
+import com.amazon.pages.ShoppingCartPage;
 import com.amazon.utilities.BrowserTools;
 import com.amazon.utilities.Driver;
 import com.amazon.utilities.ReadConfigurations;
@@ -15,6 +16,7 @@ public class ShoppingCartStepDefs {
 
     HomePage homePage=new HomePage();
     ProductPage productPage=new ProductPage();
+    ShoppingCartPage shoppingCartPage = new ShoppingCartPage();
 
     @Given("user is on the Home Page")
     public void user_is_on_the_Home_Page() {
@@ -36,7 +38,7 @@ public class ShoppingCartStepDefs {
 
 
         homePage.selectGB_Option(GB_option);
-        BrowserTools.waitFor(2);
+        BrowserTools.waitFor(3);
 
     }
     @When("user select a {string}")
@@ -58,7 +60,7 @@ public class ShoppingCartStepDefs {
     }
     @When("user adds the item in the basket")
     public void user_adds_the_item_in_the_basket() {
-        productPage.addToCart.click();
+       shoppingCartPage.addToCart.click();
         BrowserTools.waitFor(2);
     }
 
@@ -66,10 +68,10 @@ public class ShoppingCartStepDefs {
     @Then("user sees the {string} is in the shopping cart")
     public void user_sees_the_is_in_the_shopping_cart(String product) {
 
-        productPage.cartButton.click();
+        shoppingCartPage.cartButton.click();
         BrowserTools.waitFor(2);
 
-        BrowserTools.verifyElementIsDisplayed( Driver.get().findElement(By.xpath("//*[contains(text(), '" + product + "')]")));
+        BrowserTools.verifyElementIsDisplayed( Driver.get().findElement(By.xpath("//*[contains(text(), '" + product + "') and @class='a-truncate-cut']")));
 
     }
 
