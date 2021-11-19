@@ -6,19 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class HomePage {
 
-    public HomePage(){
-        PageFactory.initElements(Driver.get(),this);
-    }
+public class SearchPage extends BasePage{
 
-    @FindBy(id = "twotabsearchtextbox")
-    public WebElement searchBox;
-
-    @FindBy(id = "nav-search-submit-button")
-    public WebElement searchButton;
 
     public void selectGB_Option(String GB_option){
 
@@ -40,8 +31,6 @@ public class HomePage {
                     WebElement element = Driver.get().findElement(By.xpath("//*[contains(text(), '" + product + "')]"));
 
                     BrowserTools.scrollToElementAndClick(element);
-
-                    BrowserTools.waitFor(2);
 
                     flag = true;
 
